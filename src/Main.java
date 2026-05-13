@@ -89,18 +89,58 @@ public class Main {
         System.out.println("Digite o nome do cliente:");
         String nome = teclado.nextLine();
 
-        System.out.println("Digite o CPF:");
-        String cpf = teclado.nextLine();
+        String cpf;
 
-        int dia = lerInteiro(teclado, "Dia do cadastro:");
+        while (true) {
 
-        int mes = lerInteiro(teclado, "Mês do cadastro:");
+            System.out.println("Digite o CPF:");
+            cpf = teclado.nextLine();
+
+            if (cpfValido(cpf)) {
+
+                if (buscarClientePorCpf(clientes, cpf) == null) {
+                    break;
+                }
+
+                System.out.println("CPF já cadastrado!");
+
+            } else {
+
+                System.out.println("CPF inválido!");
+            }
+
+            System.out.println("CPF inválido!");
+        }
+
+        int dia = lerInteiroIntervalo(
+                teclado,
+                "Dia do cadastro:",
+                1,
+                31
+        );
+
+        int mes = lerInteiroIntervalo(
+                teclado,
+                "Mês do cadastro:",
+                1,
+                12
+        );
 
         int ano = lerInteiro(teclado, "Ano do cadastro:");
 
-        int hora = lerInteiro(teclado, "Hora do cadastro:");
+        int hora = lerInteiroIntervalo(
+                teclado,
+                "Hora do cadastro:",
+                0,
+                23
+        );
 
-        int minuto = lerInteiro(teclado, "Minuto do cadastro:");
+        int minuto = lerInteiroIntervalo(
+                teclado,
+                "Minuto do cadastro:",
+                0,
+                59
+        );
 
         Data dataCadastro = new Data(dia, mes, ano, hora, minuto);
 
@@ -182,21 +222,59 @@ public class Main {
 
         teclado.nextLine();
 
-        System.out.println("Digite a placa do veículo:");
-        String placa = teclado.nextLine();
+        String placa;
+
+        while (true) {
+
+            System.out.println("Digite a placa do veículo:");
+            placa = teclado.nextLine();
+
+            if (!placaValida(placa)) {
+
+                System.out.println("Placa inválida!");
+
+            } else if (buscarVeiculoPorPlaca(veiculos, placa) != null) {
+
+                System.out.println(
+                        "Já existe um veículo com essa placa no estacionamento!"
+                );
+
+            } else {
+
+                break;
+            }
+        }
 
         System.out.println("Digite o modelo:");
         String modelo = teclado.nextLine();
 
-        int dia = lerInteiro(teclado, "Dia da entrada:");
+        int dia = lerInteiroIntervalo(
+                teclado,
+                "Dia da entrada:",
+                1,
+                31
+        );
 
-        int mes = lerInteiro(teclado, "Mês da entrada:");
-
+        int mes = lerInteiroIntervalo(
+                teclado,
+                "Mês da entrada:",
+                1,
+                12
+        );
         int ano = lerInteiro(teclado, "Ano da entrada:");
 
-        int hora = lerInteiro(teclado, "Hora da entrada:");
-
-        int minuto = lerInteiro(teclado, "Minuto da entrada:");
+        int hora = lerInteiroIntervalo(
+                teclado,
+                "Hora da entrada:",
+                0,
+                23
+        );
+        int minuto = lerInteiroIntervalo(
+                teclado,
+                "Minuto da entrada:",
+                0,
+                59
+        );
 
         Data entrada = new Data(dia, mes, ano, hora, minuto);
 
@@ -235,15 +313,35 @@ public class Main {
 
         } else {
 
-            int dia = lerInteiro(teclado, "Dia da saída:");
+            int dia = lerInteiroIntervalo(
+                    teclado,
+                    "Dia da saída:",
+                    1,
+                    31
+            );
 
-            int mes = lerInteiro(teclado, "Mês da saída:");
+            int mes = lerInteiroIntervalo(
+                    teclado,
+                    "Mês da saída:",
+                    1,
+                    12
+            );
 
             int ano = lerInteiro(teclado, "Ano da saída:");
 
-            int hora = lerInteiro(teclado, "Hora da saída:");
+            int hora = lerInteiroIntervalo(
+                    teclado,
+                    "Hora da saída:",
+                    0,
+                    23
+            );
 
-            int minuto = lerInteiro(teclado, "Minuto da saída:");
+            int minuto = lerInteiroIntervalo(
+                    teclado,
+                    "Minuto da saída:",
+                    0,
+                    59
+            );
 
             Data saida = new Data(
                     dia,
@@ -368,6 +466,75 @@ public class Main {
                 System.out.println("Digite apenas números!");
             }
         }
+    }
+    public static boolean cpfValido(String cpf) {
+
+        // CPF precisa ter exatamente 11 caracteres
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        // verifica se todos os caracteres são números
+        for (int i = 0; i < cpf.length(); i++) {
+
+            if (!Character.isDigit(cpf.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public static int lerInteiroIntervalo(
+            Scanner teclado,
+            String mensagem,
+            int minimo,
+            int maximo) {
+
+        while (true) {
+
+            try {
+
+                System.out.println(mensagem);
+
+                int valor =
+                        Integer.parseInt(teclado.nextLine());
+
+                // verifica se o valor está dentro do intervalo permitido
+                if (valor >= minimo && valor <= maximo) {
+                    return valor;
+                }
+
+                System.out.println(
+                        "Digite um valor entre "
+                                + minimo
+                                + " e "
+                                + maximo
+                );
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Digite apenas números!");
+            }
+        }
+    }
+    public static boolean placaValida(String placa) {
+
+        // placa precisa ter exatamente 7 caracteres
+        if (placa.length() != 7) {
+            return false;
+        }
+
+        // verifica se todos os caracteres são letras ou números
+        for (int i = 0; i < placa.length(); i++) {
+
+            char caractere = placa.charAt(i);
+
+            if (!Character.isLetterOrDigit(caractere)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
