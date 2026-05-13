@@ -26,7 +26,18 @@ public class Main {
             System.out.println("9 - Listar Clientes");
             System.out.println("0 - Sair");
 
-            opcao = teclado.nextInt();
+            try {
+
+                opcao = Integer.parseInt(teclado.nextLine());opcao = lerInteiro(teclado, "");
+
+            } catch (Exception e) {
+
+                System.out.println("Digite apenas números!");
+
+                teclado.nextLine();
+
+                opcao = -1;
+            }
 
             if (opcao == 1) {
                 cadastrarCliente(clientes, teclado);
@@ -81,20 +92,15 @@ public class Main {
         System.out.println("Digite o CPF:");
         String cpf = teclado.nextLine();
 
-        System.out.println("Dia do cadastro:");
-        int dia = teclado.nextInt();
+        int dia = lerInteiro(teclado, "Dia do cadastro:");
 
-        System.out.println("Mês do cadastro:");
-        int mes = teclado.nextInt();
+        int mes = lerInteiro(teclado, "Mês do cadastro:");
 
-        System.out.println("Ano do cadastro:");
-        int ano = teclado.nextInt();
+        int ano = lerInteiro(teclado, "Ano do cadastro:");
 
-        System.out.println("Hora do cadastro:");
-        int hora = teclado.nextInt();
+        int hora = lerInteiro(teclado, "Hora do cadastro:");
 
-        System.out.println("Minuto do cadastro:");
-        int minuto = teclado.nextInt();
+        int minuto = lerInteiro(teclado, "Minuto do cadastro:");
 
         Data dataCadastro = new Data(dia, mes, ano, hora, minuto);
 
@@ -182,24 +188,18 @@ public class Main {
         System.out.println("Digite o modelo:");
         String modelo = teclado.nextLine();
 
-        System.out.println("Dia da entrada:");
-        int dia = teclado.nextInt();
+        int dia = lerInteiro(teclado, "Dia da entrada:");
 
-        System.out.println("Mês da entrada:");
-        int mes = teclado.nextInt();
+        int mes = lerInteiro(teclado, "Mês da entrada:");
 
-        System.out.println("Ano da entrada:");
-        int ano = teclado.nextInt();
+        int ano = lerInteiro(teclado, "Ano da entrada:");
 
-        System.out.println("Hora da entrada:");
-        int hora = teclado.nextInt();
+        int hora = lerInteiro(teclado, "Hora da entrada:");
 
-        System.out.println("Minuto da entrada:");
-        int minuto = teclado.nextInt();
+        int minuto = lerInteiro(teclado, "Minuto da entrada:");
 
         Data entrada = new Data(dia, mes, ano, hora, minuto);
 
-        teclado.nextLine();
 
         System.out.println("Digite o CPF do cliente (ou deixe vazio):");
         String cpf = teclado.nextLine();
@@ -235,20 +235,15 @@ public class Main {
 
         } else {
 
-            System.out.println("Dia da saída:");
-            int dia = teclado.nextInt();
+            int dia = lerInteiro(teclado, "Dia da saída:");
 
-            System.out.println("Mês da saída:");
-            int mes = teclado.nextInt();
+            int mes = lerInteiro(teclado, "Mês da saída:");
 
-            System.out.println("Ano da saída:");
-            int ano = teclado.nextInt();
+            int ano = lerInteiro(teclado, "Ano da saída:");
 
-            System.out.println("Hora da saída:");
-            int hora = teclado.nextInt();
+            int hora = lerInteiro(teclado, "Hora da saída:");
 
-            System.out.println("Minuto da saída:");
-            int minuto = teclado.nextInt();
+            int minuto = lerInteiro(teclado, "Minuto da saída:");
 
             Data saida = new Data(
                     dia,
@@ -296,8 +291,7 @@ public class Main {
             ArrayList<Veiculo> veiculos,
             Scanner teclado) {
 
-        System.out.println("Digite o mês:");
-        int mes = teclado.nextInt();
+        int mes = lerInteiro(teclado, "Digite o mês:");
 
         double total = 0;
 
@@ -356,6 +350,24 @@ public class Main {
         }
 
         return null;
+    }
+    public static int lerInteiro(
+            Scanner teclado,
+            String mensagem) {
+
+        while (true) {
+
+            try {
+
+                System.out.println(mensagem);
+
+                return Integer.parseInt(teclado.nextLine());
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Digite apenas números!");
+            }
+        }
     }
 
 
