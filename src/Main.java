@@ -112,15 +112,7 @@ public class Main {
         System.out.println("Digite o CPF do cliente:");
         String cpf = teclado.nextLine();
 
-        Cliente encontrado = null;
-
-        for (Cliente c : clientes) {
-
-            if (c.getCpf().equals(cpf)) {
-                encontrado = c;
-                break;
-            }
-        }
+        Cliente encontrado = buscarClientePorCpf(clientes, cpf);
 
         if (encontrado == null) {
 
@@ -141,15 +133,7 @@ public class Main {
         System.out.println("Digite o CPF do cliente:");
         String cpf = teclado.nextLine();
 
-        Cliente encontrado = null;
-
-        for (Cliente c : clientes) {
-
-            if (c.getCpf().equals(cpf)) {
-                encontrado = c;
-                break;
-            }
-        }
+        Cliente encontrado = buscarClientePorCpf(clientes, cpf);
 
         if (encontrado == null) {
 
@@ -172,15 +156,7 @@ public class Main {
         System.out.println("Digite o CPF do cliente:");
         String cpf = teclado.nextLine();
 
-        Cliente encontrado = null;
-
-        for (Cliente c : clientes) {
-
-            if (c.getCpf().equals(cpf)) {
-                encontrado = c;
-                break;
-            }
-        }
+        Cliente encontrado = buscarClientePorCpf(clientes, cpf);
 
         if (encontrado == null) {
 
@@ -228,21 +204,13 @@ public class Main {
         System.out.println("Digite o CPF do cliente (ou deixe vazio):");
         String cpf = teclado.nextLine();
 
-        Cliente clienteEncontrado = null;
-
-        for (Cliente c : clientes) {
-
-            if (c.getCpf().equals(cpf)) {
-                clienteEncontrado = c;
-                break;
-            }
-        }
+        Cliente encontrado = buscarClientePorCpf(clientes, cpf);
 
         Veiculo veiculo = new Veiculo(
                 placa,
                 modelo,
                 entrada,
-                clienteEncontrado
+                encontrado
         );
 
         veiculos.add(veiculo);
@@ -258,17 +226,8 @@ public class Main {
         System.out.println("Digite a placa:");
         String placa = teclado.nextLine();
 
-        Veiculo encontrado = null;
-
-        for (Veiculo v : veiculos) {
-
-            if (v.getPlaca().equals(placa)
-                    && v.getSaida() == null) {
-
-                encontrado = v;
-                break;
-            }
-        }
+        Veiculo encontrado =
+                buscarVeiculoPorPlaca(veiculos, placa);
 
         if (encontrado == null) {
 
@@ -369,6 +328,34 @@ public class Main {
 
             System.out.println("----------------------");
         }
+    }
+    public static Cliente buscarClientePorCpf(
+            ArrayList<Cliente> clientes,
+            String cpf) {
+
+        for (Cliente c : clientes) {
+
+            if (c.getCpf().equals(cpf)) {
+                return c;
+            }
+        }
+
+        return null;
+    }
+    public static Veiculo buscarVeiculoPorPlaca(
+            ArrayList<Veiculo> veiculos,
+            String placa) {
+
+        for (Veiculo v : veiculos) {
+
+            if (v.getPlaca().equals(placa)
+                    && v.getSaida() == null) {
+
+                return v;
+            }
+        }
+
+        return null;
     }
 
 
