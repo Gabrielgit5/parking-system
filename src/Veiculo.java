@@ -83,8 +83,22 @@ public class Veiculo {
     public void registrarSaida(Data saida) {
         this.saida = saida;
 
-        int horas = saida.getHora() - entrada.getHora();
-        valorPago = horas * 1;
+        // transforma horários em minutos totais
+        int minutosEntrada =
+                entrada.getHora() * 60 + entrada.getMinuto();
+
+        int minutosSaida =
+                saida.getHora() * 60 + saida.getMinuto();
+
+// calcula tempo total no estacionamento
+        int minutosTotais =
+                minutosSaida - minutosEntrada;
+
+// arredonda para cima a quantidade de horas
+        int horasCobradas =
+                (int) Math.ceil(minutosTotais / 60.0);
+
+        valorPago = horasCobradas * 1;
 
         if (cliente != null) {
             valorPago = valorPago * 0.9;
